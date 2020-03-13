@@ -9,4 +9,8 @@ Rails.application.routes.draw do
   
   resources :quests
 
+  resources :quest_object, controller: "quests", only: [:object]
+
+  get "/quest_object/:id", to: "quests#object"
+
 end
