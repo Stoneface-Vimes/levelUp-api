@@ -40,19 +40,19 @@ ActiveRecord::Schema.define(version: 2020_03_13_202957) do
   create_table "parties", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.bigint "number_of_members"
     t.text "party_name"
-    t.string "mentor_id", limit: 255
+    t.integer "mentor_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["created_at"], name: "index_parties_on_created_at"
   end
 
   create_table "quests", force: :cascade do |t|
-    t.text "party_id"
-    t.text "user_id"
+    t.integer "party_id"
+    t.integer "user_id"
     t.text "title"
-    t.text "quest_description"
+    t.text "description"
     t.text "status"
-    t.text "mentor_id"
+    t.integer "mentor_id"
     t.datetime "date_finished"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -68,7 +68,7 @@ ActiveRecord::Schema.define(version: 2020_03_13_202957) do
   create_table "users", force: :cascade do |t|
     t.text "email"
     t.string "name", limit: 32
-    t.text "party_id"
+    t.integer "party_id"
     t.string "title", limit: 32
     t.text "profile_pic_ref"
     t.datetime "created_at", null: false
