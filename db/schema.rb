@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_13_190251) do
+ActiveRecord::Schema.define(version: 2020_03_13_202957) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -26,6 +26,17 @@ ActiveRecord::Schema.define(version: 2020_03_13_190251) do
     t.index ["todo_id"], name: "index_items_on_todo_id"
   end
 
+  create_table "nodes", force: :cascade do |t|
+    t.text "title"
+    t.text "description"
+    t.boolean "is_complete?"
+    t.datetime "date_finished"
+    t.bigint "quest_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["quest_id"], name: "index_nodes_on_quest_id"
+  end
+
   create_table "parties", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.bigint "number_of_members"
     t.text "party_name"
@@ -36,8 +47,8 @@ ActiveRecord::Schema.define(version: 2020_03_13_190251) do
   end
 
   create_table "quests", force: :cascade do |t|
-    t.text "party_key"
-    t.text "user_key"
+    t.text "party_id"
+    t.text "user_id"
     t.text "title"
     t.text "quest_description"
     t.text "status"
