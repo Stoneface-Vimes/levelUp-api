@@ -4,5 +4,9 @@ Rails.application.routes.draw do
   end
 
   resources :users
+  resources :parties
+  
+  
+  resources :quests
 
 end

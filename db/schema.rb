@@ -10,10 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_12_223820) do
+ActiveRecord::Schema.define(version: 2020_03_13_190251) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pgcrypto"
   enable_extension "plpgsql"
+  enable_extension "uuid-ossp"
 
   create_table "items", force: :cascade do |t|
     t.string "name"
@@ -22,6 +24,27 @@ ActiveRecord::Schema.define(version: 2020_03_12_223820) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["todo_id"], name: "index_items_on_todo_id"
+  end
+
+  create_table "parties", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.bigint "number_of_members"
+    t.text "party_name"
+    t.string "mentor_id", limit: 255
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["created_at"], name: "index_parties_on_created_at"
+  end
+
+  create_table "quests", force: :cascade do |t|
+    t.text "party_key"
+    t.text "user_key"
+    t.text "title"
+    t.text "quest_description"
+    t.text "status"
+    t.text "mentor_id"
+    t.datetime "date_finished"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "todos", force: :cascade do |t|
