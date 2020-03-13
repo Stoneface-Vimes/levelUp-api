@@ -7,7 +7,9 @@ Rails.application.routes.draw do
   resources :parties
   
   
-  resources :quests
+  resources :quests do
+    resources :nodes
+  end
 
   resources :quest_object, controller: "quests", only: [:object]
 
