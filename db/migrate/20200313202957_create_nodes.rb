@@ -5,7 +5,7 @@ class CreateNodes < ActiveRecord::Migration[5.2]
       t.text :description
       t.boolean :is_complete?
       t.timestamp :date_finished
-      t.references :quest
+      t.references :quest, foreign_key: true
 
       t.timestamps
     end

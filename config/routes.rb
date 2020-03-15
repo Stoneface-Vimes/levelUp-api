@@ -8,7 +8,9 @@ Rails.application.routes.draw do
   
   
   resources :quests do
-    resources :nodes
+    resources :nodes do
+      resources :posts
+    end
   end
 
   resources :quest_object, controller: "quests", only: [:object]

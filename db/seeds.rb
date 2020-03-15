@@ -26,7 +26,7 @@ puts "Creating Quests ..."
 Quest.destroy_all
 
 quest1 = Quest.find_or_create_by!({
-  id: SecureRandom.uuid,
+  id: 1,
   party_id: SecureRandom.uuid,
   user_id: Faker::Number.decimal_part(digits: 2),
   mentor_id: Faker::Number.decimal_part(digits: 2),
@@ -37,7 +37,7 @@ quest1 = Quest.find_or_create_by!({
 })
 
 quest2 = Quest.find_or_create_by!({
-  id: SecureRandom.uuid,
+  id: 2,
   party_id: SecureRandom.uuid,
   user_id: Faker::Number.decimal_part(digits: 2),
   mentor_id: Faker::Number.decimal_part(digits: 2),
@@ -54,6 +54,7 @@ puts "Creating Nodes ..."
 Node.destroy_all
 
 node1 = Node.find_or_create_by!({
+  id: 1,
   title: Faker::Lorem.word,
   description: Faker::Lorem.sentence,
   is_complete?: Faker::Boolean.boolean,
@@ -62,6 +63,7 @@ node1 = Node.find_or_create_by!({
 })
 
 node2 = Node.find_or_create_by!({
+  id: 2,
   title: Faker::Lorem.word,
   description: Faker::Lorem.sentence,
   is_complete?: Faker::Boolean.boolean,
@@ -70,6 +72,7 @@ node2 = Node.find_or_create_by!({
 })
 
 node3 = Node.find_or_create_by!({
+  id: 3,
   title: Faker::Lorem.word,
   description: Faker::Lorem.sentence,
   is_complete?: Faker::Boolean.boolean,
@@ -78,6 +81,7 @@ node3 = Node.find_or_create_by!({
 })
 
 node4 = Node.find_or_create_by!({
+  id: 4,
   title: Faker::Lorem.word,
   description: Faker::Lorem.sentence,
   is_complete?: Faker::Boolean.boolean,
@@ -86,6 +90,7 @@ node4 = Node.find_or_create_by!({
 })
 
 node5 = Node.find_or_create_by!({
+  id: 5,
   title: Faker::Lorem.word,
   description: Faker::Lorem.sentence,
   is_complete?: Faker::Boolean.boolean,
@@ -94,6 +99,7 @@ node5 = Node.find_or_create_by!({
 })
 
 node6 = Node.find_or_create_by!({
+  id: 6,
   title: Faker::Lorem.word,
   description: Faker::Lorem.sentence,
   is_complete?: Faker::Boolean.boolean,
@@ -102,6 +108,7 @@ node6 = Node.find_or_create_by!({
 })
 
 node7 = Node.find_or_create_by!({
+  id: 7,
   title: Faker::Lorem.word,
   description: Faker::Lorem.sentence,
   is_complete?: Faker::Boolean.boolean,
@@ -110,6 +117,7 @@ node7 = Node.find_or_create_by!({
 })
 
 node8 = Node.find_or_create_by!({
+  id: 8,
   title: Faker::Lorem.word,
   description: Faker::Lorem.sentence,
   is_complete?: Faker::Boolean.boolean,
@@ -118,6 +126,7 @@ node8 = Node.find_or_create_by!({
 })
 
 node9 = Node.find_or_create_by!({
+  id: 9,
   title: Faker::Lorem.word,
   description: Faker::Lorem.sentence,
   is_complete?: Faker::Boolean.boolean,
@@ -126,10 +135,41 @@ node9 = Node.find_or_create_by!({
 })
 
 node10 = Node.find_or_create_by!({
+  id: 10,
   title: Faker::Lorem.word,
   description: Faker::Lorem.sentence,
   is_complete?: Faker::Boolean.boolean,
   quest_id: quest2.id,
   date_finished: Faker::Time.between(from: DateTime.now, to: quest2.date_finished)
 })
+
+Post.destroy_all
+
+puts "Generating Posts ..."
+
+post_list = [
+  [Faker::Lorem.word, Faker::Lorem.sentence, node1.id],
+  [Faker::Lorem.word, Faker::Lorem.sentence, node1.id],
+  [Faker::Lorem.word, Faker::Lorem.sentence, node2.id],
+  [Faker::Lorem.word, Faker::Lorem.sentence, node2.id],
+  [Faker::Lorem.word, Faker::Lorem.sentence, node3.id],
+  [Faker::Lorem.word, Faker::Lorem.sentence, node3.id],
+  [Faker::Lorem.word, Faker::Lorem.sentence, node4.id],
+  [Faker::Lorem.word, Faker::Lorem.sentence, node4.id],
+  [Faker::Lorem.word, Faker::Lorem.sentence, node5.id],
+  [Faker::Lorem.word, Faker::Lorem.sentence, node5.id],
+  [Faker::Lorem.word, Faker::Lorem.sentence, node6.id],
+  [Faker::Lorem.word, Faker::Lorem.sentence, node6.id],
+  [Faker::Lorem.word, Faker::Lorem.sentence, node7.id],
+  [Faker::Lorem.word, Faker::Lorem.sentence, node7.id],
+  [Faker::Lorem.word, Faker::Lorem.sentence, node8.id],
+  [Faker::Lorem.word, Faker::Lorem.sentence, node8.id],
+  [Faker::Lorem.word, Faker::Lorem.sentence, node9.id],
+  [Faker::Lorem.word, Faker::Lorem.sentence, node9.id],
+  [Faker::Lorem.word, Faker::Lorem.sentence, node10.id],
+  [Faker::Lorem.word, Faker::Lorem.sentence, node10.id]
+]
+post_list.each do |title, content, node_id|
+  Post.find_or_create_by!(title: title, content: content, node_id: node_id)
+end
 
