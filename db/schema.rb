@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_13_202957) do
+ActiveRecord::Schema.define(version: 2020_03_13_215218) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -46,6 +46,16 @@ ActiveRecord::Schema.define(version: 2020_03_13_202957) do
     t.index ["created_at"], name: "index_parties_on_created_at"
   end
 
+  create_table "posts", force: :cascade do |t|
+    t.string "content"
+    t.string "symbol_ref"
+    t.string "title"
+    t.bigint "node_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["node_id"], name: "index_posts_on_node_id"
+  end
+
   create_table "quests", force: :cascade do |t|
     t.integer "party_id"
     t.integer "user_id"
@@ -76,4 +86,6 @@ ActiveRecord::Schema.define(version: 2020_03_13_202957) do
   end
 
   add_foreign_key "items", "todos"
+  add_foreign_key "nodes", "quests"
+  add_foreign_key "posts", "nodes"
 end
