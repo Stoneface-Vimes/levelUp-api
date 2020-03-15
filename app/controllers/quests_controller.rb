@@ -13,7 +13,27 @@ class QuestsController < ApplicationController
     # Will return a Quest JSON object containing the quest,
     # and all relevant nodes, posts and comments
     def object
-    json_response("Hello World")
+    @quest = Quest.find(params[:id])
+    @nodes = Node.where(quest_id: @quest.id)
+    @posts = []
+    @nodes.each do |node| 
+      @posts.append(Post.where(node_id: node.id))
+    end
+    @comments = []
+    @posts.each do |post|
+      post.each do |post2|
+      @comments.append(Comment.where(post_id: post2.id))
+    end
+  end
+    
+  @response = {
+    :quest => @quest,
+    :nodes => @nodes,
+    :posts => @posts,
+    :comments => @comments
+  }
+
+    json_response(@response)
     end
   
 
