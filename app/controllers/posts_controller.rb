@@ -1,5 +1,8 @@
 class PostsController < ApplicationController
 
+  include Response
+  include ExceptionHandler
+
       # GET /posts
       def index
         @posts = Post.all

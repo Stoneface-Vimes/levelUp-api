@@ -1,5 +1,8 @@
 class QuestsController < ApplicationController
 
+  include Response
+  include ExceptionHandler
+
     # GET /quests
     def index
       @quests = Quest.all

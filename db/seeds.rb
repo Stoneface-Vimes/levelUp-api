@@ -147,29 +147,64 @@ Post.destroy_all
 
 puts "Generating Posts ..."
 
+# The below code generates seed data for posts
 post_list = [
-  [Faker::Lorem.word, Faker::Lorem.sentence, node1.id],
-  [Faker::Lorem.word, Faker::Lorem.sentence, node1.id],
-  [Faker::Lorem.word, Faker::Lorem.sentence, node2.id],
-  [Faker::Lorem.word, Faker::Lorem.sentence, node2.id],
-  [Faker::Lorem.word, Faker::Lorem.sentence, node3.id],
-  [Faker::Lorem.word, Faker::Lorem.sentence, node3.id],
-  [Faker::Lorem.word, Faker::Lorem.sentence, node4.id],
-  [Faker::Lorem.word, Faker::Lorem.sentence, node4.id],
-  [Faker::Lorem.word, Faker::Lorem.sentence, node5.id],
-  [Faker::Lorem.word, Faker::Lorem.sentence, node5.id],
-  [Faker::Lorem.word, Faker::Lorem.sentence, node6.id],
-  [Faker::Lorem.word, Faker::Lorem.sentence, node6.id],
-  [Faker::Lorem.word, Faker::Lorem.sentence, node7.id],
-  [Faker::Lorem.word, Faker::Lorem.sentence, node7.id],
-  [Faker::Lorem.word, Faker::Lorem.sentence, node8.id],
-  [Faker::Lorem.word, Faker::Lorem.sentence, node8.id],
-  [Faker::Lorem.word, Faker::Lorem.sentence, node9.id],
-  [Faker::Lorem.word, Faker::Lorem.sentence, node9.id],
-  [Faker::Lorem.word, Faker::Lorem.sentence, node10.id],
-  [Faker::Lorem.word, Faker::Lorem.sentence, node10.id]
+  node1.id,
+  node2.id,
+  node3.id,
+  node4.id,
+  node5.id,
+  node6.id,
+  node7.id,
+  node8.id,
+  node9.id,
+  node10.id
 ]
-post_list.each do |title, content, node_id|
-  Post.find_or_create_by!(title: title, content: content, node_id: node_id)
+
+count = 1
+
+posts = []
+
+post_list.each do |node_id|
+  posts.append(Post.find_or_create_by!(id: count, title: Faker::Lorem.word, content: Faker::Lorem.sentence, node_id: node_id))
+  count += 1
+  posts.append(Post.find_or_create_by!(id: count, title: Faker::Lorem.word, content: Faker::Lorem.sentence, node_id: node_id))
+  count += 1
 end
 
+puts posts.length
+puts posts[0].id
+
+Comment.destroy_all
+
+puts "Generating Comments ..."
+
+comment_list = [
+  posts[0].id,
+  posts[1].id,
+  posts[2].id,
+  posts[3].id,
+  posts[4].id,
+  posts[5].id,
+  posts[6].id,
+  posts[7].id,
+  posts[8].id,
+  posts[9].id,
+  posts[10].id,
+  posts[11].id,
+  posts[12].id,
+  posts[13].id,
+  posts[14].id,
+  posts[15].id,
+  posts[16].id,
+  posts[17].id,
+  posts[18].id,
+  posts[19].id
+]
+
+comments = []
+
+comment_list.each do |post_id|
+  comments.append(Comment.find_or_create_by!(text: Faker::Lorem.sentence, username: Faker::Name.name, post_id: post_id))
+  comments.append(Comment.find_or_create_by!(text: Faker::Lorem.sentence, username: Faker::Name.name, post_id: post_id))
+end
