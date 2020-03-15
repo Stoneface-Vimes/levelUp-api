@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_15_192211) do
+ActiveRecord::Schema.define(version: 2020_03_15_214244) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -66,7 +66,7 @@ ActiveRecord::Schema.define(version: 2020_03_15_192211) do
   end
 
   create_table "quests", force: :cascade do |t|
-    t.integer "party_id"
+    t.text "party_id"
     t.integer "user_id"
     t.text "title"
     t.text "description"
@@ -87,7 +87,7 @@ ActiveRecord::Schema.define(version: 2020_03_15_192211) do
   create_table "users", force: :cascade do |t|
     t.text "email"
     t.string "name", limit: 32
-    t.integer "party_id"
+    t.text "party_id"
     t.string "title", limit: 32
     t.text "profile_pic_ref"
     t.datetime "created_at", null: false

@@ -19,6 +19,102 @@ unless Rails.env.development?
   exit 0
 end
 
+## USERS
+
+puts "Generating User Names ..."
+
+user_names = []
+
+user_names = [
+  Faker::Name.name,
+  Faker::Name.name,
+  Faker::Name.name,
+  Faker::Name.name,
+  Faker::Name.name,
+  Faker::Name.name
+]
+
+puts "Generating Party UUIDs ..."
+
+party_uuids = []
+
+party_uuids = [
+  SecureRandom.uuid,
+  SecureRandom.uuid
+]
+
+puts "Creating Users ..."
+
+User.destroy_all
+
+user1 = User.find_or_create_by!({
+  id: 1,
+  name: user_names[0],
+  email: Faker::Internet.email(name: user_names[0].strip),
+  title: Faker::Job.title,
+  party_id: party_uuids[0]
+})
+
+user2 = User.find_or_create_by!({
+  id: 2,
+  name: user_names[1],
+  email: Faker::Internet.email(name: user_names[1].strip),
+  title: Faker::Job.title,
+  party_id: party_uuids[1]
+})
+
+user3 = User.find_or_create_by!({
+  id: 3,
+  name: user_names[2],
+  email: Faker::Internet.email(name: user_names[1].strip),
+  title: Faker::Job.title,
+  party_id: party_uuids[0]
+})
+
+user4 = User.find_or_create_by!({
+  id: 4,
+  name: user_names[3],
+  email: Faker::Internet.email(name: user_names[1].strip),
+  title: Faker::Job.title,
+  party_id: party_uuids[1]
+})
+
+user5 = User.find_or_create_by!({
+  id: 5,
+  name: user_names[4],
+  email: Faker::Internet.email(name: user_names[1].strip),
+  title: Faker::Job.title,
+  party_id: party_uuids[0]
+})
+
+user6 = User.find_or_create_by!({
+  id: 6,
+  name: user_names[5],
+  email: Faker::Internet.email(name: user_names[1].strip),
+  title: Faker::Job.title,
+  party_id: party_uuids[1]
+})
+
+## PARTIES
+
+puts "Generating Parties ..."
+
+Party.destroy_all
+
+party1 = Party.find_or_create_by!({
+  id: party_uuids[0],
+  number_of_members: 1,
+  mentor_id: user1.id,
+  party_name: Faker::Cannabis.strain
+})
+
+party2 = Party.find_or_create_by!({
+  id: party_uuids[1],
+  number_of_members: 1,
+  mentor_id: user2.id,
+  party_name: Faker::Cannabis.strain
+})
+
 ## QUESTS
 
 puts "Creating Quests ..."
@@ -27,9 +123,9 @@ Quest.destroy_all
 
 quest1 = Quest.find_or_create_by!({
   id: 1,
-  party_id: SecureRandom.uuid,
-  user_id: Faker::Number.decimal_part(digits: 2),
-  mentor_id: Faker::Number.decimal_part(digits: 2),
+  party_id: party1.id,
+  user_id: user1.id,
+  mentor_id: user1.id,
   title: Faker::Lorem.word,
   description: Faker::Lorem.sentence,
   status: quest_status.sample,
@@ -38,9 +134,9 @@ quest1 = Quest.find_or_create_by!({
 
 quest2 = Quest.find_or_create_by!({
   id: 2,
-  party_id: SecureRandom.uuid,
-  user_id: Faker::Number.decimal_part(digits: 2),
-  mentor_id: Faker::Number.decimal_part(digits: 2),
+  party_id: party2.id,
+  user_id: user2.id,
+  mentor_id: user2.id,
   title: Faker::Lorem.word,
   description: Faker::Lorem.sentence,
   status: quest_status.sample,
@@ -172,8 +268,6 @@ post_list.each do |node_id|
   count += 1
 end
 
-puts posts.length
-puts posts[0].id
 
 Comment.destroy_all
 
@@ -204,7 +298,12 @@ comment_list = [
 
 comments = []
 
-comment_list.each do |post_id|
-  comments.append(Comment.find_or_create_by!(text: Faker::Lorem.sentence, username: Faker::Name.name, post_id: post_id))
-  comments.append(Comment.find_or_create_by!(text: Faker::Lorem.sentence, username: Faker::Name.name, post_id: post_id))
+comment_list.each_with_index do |post_id, index|
+  if index >= 9
+  comments.append(Comment.find_or_create_by!(text: Faker::Lorem.sentence, username: [user3.name, user5.name].sample, post_id: post_id))
+  comments.append(Comment.find_or_create_by!(text: Faker::Lorem.sentence, username: [user3.name, user5.name].sample, post_id: post_id))
+  else
+  comments.append(Comment.find_or_create_by!(text: Faker::Lorem.sentence, username: [user4.name, user6.name].sample, post_id: post_id))
+  comments.append(Comment.find_or_create_by!(text: Faker::Lorem.sentence, username: [user4.name, user6.name].sample, post_id: post_id))
+  end
 end
