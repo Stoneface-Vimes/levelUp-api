@@ -19,6 +19,35 @@ unless Rails.env.development?
   exit 0
 end
 
+## USERS
+
+puts "Generating Names ..."
+
+user_names = []
+
+user_names = [
+  Faker::Name.name,
+  Faker::Name.name,
+]
+
+puts "Creating Users ..."
+
+User.destroy_all
+
+user1 = User.find_or_create_by!({
+  id: 1,
+  name: user_names[0],
+  email: Faker::Internet.email(name: user_names[0].strip),
+  title: Faker::Job.title
+})
+
+user2 = User.find_or_create_by!({
+  id: 2,
+  name: user_names[1],
+  email: Faker::Internet.email(name: user_names[1].strip),
+  title: Faker::Job.title
+})
+
 ## QUESTS
 
 puts "Creating Quests ..."
